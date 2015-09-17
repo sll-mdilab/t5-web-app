@@ -1,0 +1,52 @@
+<form style="text-align: left">
+  <div class="col-xs-12">
+    <h4 class="form-header"><span>Personuppgifter</span></h4>
+
+    <div class="row">
+      <div class="form-group col-xs-4">
+        <label for="idNumber">Personnummer</label>
+        <input type="text" class="form-control" id="idNumber" placeholder="DDDDDD-XXXX"
+               ng-model="newEncounter.patient.details.identifier[0].value">
+      </div>
+      <div class="form-group col-xs-4">
+        <label for="firstName">Förnamn</label>
+        <input type="text" class="form-control" id="firstName" placeholder="Förnamn"
+               ng-model="newEncounter.patient.details.name[0].given[0]">
+      </div>
+      <div class="form-group col-xs-4">
+        <label for="lastName">Efternamn</label>
+        <input type="text" class="form-control" id="lastName" placeholder="Efternamn"
+               ng-model="newEncounter.patient.details.name[0].family[0]">
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-xs-4">
+        <label for="street">Adress</label>
+        <input type="text" class="form-control" id="street" placeholder="Adress"
+               ng-model="newEncounter.patient.details.address[0].line">
+      </div>
+      <div class="form-group col-xs-4">
+        <label for="zip">PostNr</label>
+        <input type="text" class="form-control" id="zip" placeholder="Postnummer"
+               ng-model="newEncounter.patient.details.address[0].postalCode">
+      </div>
+      <div class="form-group col-xs-4">
+        <label for="city">Stad</label>
+        <input type="text" class="form-control" id="city" placeholder="Stad"
+               ng-model="newEncounter.patient.details.address[0].city">
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-xs-6">
+        <label for="email">Epost</label>
+        <input type="email" class="form-control" id="email" placeholder="exempel@doman.se"
+               ng-model="(newEncounter.patient.details.telecom | filter:{system:'email'})[0].value">
+      </div>
+      <div class="form-group col-xs-6">
+        <label for="tel">Telefon</label>
+        <input type="tel" class="form-control" id="tel" placeholder="0701234567"
+               ng-model="(newEncounter.patient.details.telecom | filter:{system:'phone'})[0].value">
+      </div>
+    </div>
+  </div>
+</form>

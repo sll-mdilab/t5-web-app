@@ -1,0 +1,62 @@
+[
+{
+		"id": "1",
+		"user": {
+			"id": "123",
+			"role": "nurse",
+			"password": "qwe",
+			"name":"test",
+			"profileURL": "db/images/female-avatar-1.png"
+		}
+},
+{
+		"id": "2",
+		"user": {
+			"id": "198405232310",
+			"role": "nurse",
+			"password": "qwerty",
+			"name": "Adam Bertilsson",
+			"profileURL": "db/images/male-avatar-1.png"
+		}
+},
+{
+		"id": "3",
+		"user": {
+			"id": "195911092134",
+			"role": "doctor",
+			"password": "12345",
+			"name": "Cesar Davidsson",
+			"profileURL": "db/images/male-avatar-2.png"
+		}
+},
+{
+		"id": "4",
+		"user": {
+			"id": "8808083516",
+			"role": "doctor",
+			"password": "12345",
+			"name": "Elis Kullberg",
+			"profileURL": "db/images/male-avatar-1.png"
+		}
+},
+{
+		"id": "5",
+		"user": {
+			"id": "0169541076143254",
+			"role": "nurse",
+			"password": "12345",
+			"name": "Alexander Takacs",
+			"profileURL": "db/images/male-avatar-1.png"
+		}
+},
+  {
+    "id": "6",
+    "user": {
+      "id": "1010101010",
+      "role": "doctor",
+      "password": "123",
+      "name":"Tian Tiansson",
+      "profileURL": "db/images/female-avatar-1.png"
+    }
+  }
+]

@@ -1,0 +1,56 @@
+<div class="container">
+  <div class="row margin-bottom-50">
+    <div class="col-sm-6">
+      <h2>Patient
+        <button class="btn btn-success btn-xs" ng-click="openPatientSearch()"><i ng-hide="patient"
+                                                                                 class="glyphicon glyphicon-plus"></i><i
+          ng-show="patient" class="glyphicon glyphicon-random"></i></button>
+      </h2>
+      <div ng-include="'views/patientprofile.html'"></div>
+    </div>
+    <div class="col-sm-6">
+      <div ng-class="{'not-visible': !patient}">
+        <h2>Enheter</h2>
+
+        <div>
+          <div ng-show="showSpinner" class="spinner-overlay"><i class="spinning glyphicon glyphicon-refresh"></i></div>
+          <div ui-grid="gridOptions" id='device-grid' class="grid" ng-style="{height:getGridHeight()+'px'}"
+               ui-grid-auto-resize ui-grid-selection></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row margin-bottom-50">
+    <div ng-show="loadingChart" class="spinner-overlay">
+      <p class="loading">
+        <span>.</span><span>.</span><span>.</span>
+      </p>
+    </div>
+    <div ng-class="{'not-visible': !showChart}">
+      <div class="row">
+        <div class="col-sm-6">
+          <p class="text-muted" style="font-weight: lighter">Visa data från de senaste...</p>
+          <label class="radio-inline" ng-repeat="item in timeFrames">
+            <input type="radio" name="inlineRadioOptions" ng-model="$parent.timeIntervalInMs" value="{{item.value}}">{{item.label}}
+          </label>
+        </div>
+        <div class="col-sm-2 form-group">
+          <label for="timeDomainPaddingType">Visual Mode:</label>
+          <select class="form-control" id="timeDomainPaddingType" ng-model="chartConfig.trimSides"
+                  ng-options="k as v for (k,v) in {'0':'No trimming', '1': 'Trim Right', '2': 'Trim both, padding Left', '3': 'Trim both, no padding'}"></select>
+        </div>
+        <div class="col-sm-4">
+          <div for="timeDomainPaddingType" class="not-visible">Controls:</div>
+          <div class="btn-group btn-group-sm pull-right" id="controls">
+            <button type="button" class="btn btn-success" ng-click="saveUpdates()">Save Updates</button>
+            <button type="button" class="btn btn-info" ng-click="toggleLine()">Toggle Line</button>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <fhir-focus-context-chart data="chartData" id="obs-chart" ng-class="{'hide-line': hideLine}"
+                                  config="chartConfig"></fhir-focus-context-chart>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,7 @@
+<table class="table table-condensed">
+  <div>
+    <tr ng-repeat="observation in data.observations | orderBy:'resource.appliesDateTime':true | limitTo:10 track by observation.resource.appliesDateTime">
+      <td>{{ observation.resource.appliesDateTime + '+0000' | date:'HH:mm:ss'}}</td><td><b>{{observation.resource.valueString || observation.resource.valueQuantity.value}}</b></td>
+    </tr>
+  </div>
+</table>

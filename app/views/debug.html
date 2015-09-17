@@ -1,0 +1,104 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12">
+      <form id="debug-search-form" ng-class="{'debug-search-active': showSearch}">
+        <!--<label class="text-label">Skriv för att söka</label>-->
+        <div style="display:inline-block;">
+          <label class="text-muted" id="debug-search-label" ng-class="{'debug-search-active': showSearch}"
+                 ng-click="toggleSearch()" for="debug-search-input"><i class="fa fa-search icon-medium"></i></label>
+          <input type="text" ng-model="searchTerm" placeholder="Personnummer"
+                 class="form-control ng-isolate-scope ng-valid ng-dirty" ng-class="{'debug-search-active': showSearch}"
+                 id="debug-search-input">
+          <label class="text-muted" id="debug-search-more" ng-click="toggleMoreOptions()"
+                 ng-class="{'fadeIn': showSearch, 'fadeOut': !showSearch}"><i class="fa fa-plus show-more"
+                                                                              ng-class="{'open': showMoreOptions}"></i></label>
+        </div>
+        <div class="debug-more-options" ng-class="{'fadeIn': showMoreOptions && showSearch}">
+          <div class="debug-search-datepicker">
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="Från" datetime-picker="dd MMM yyyy HH:mm"
+                     ng-model="retroLog.from"
+                     is-open="dtPickerOpen.from"
+                     datepicker-options="datePickerOptions"
+                     timepicker-options="timePickerOptions"
+                     today-text="Idag"
+                     now-text="Nu"
+                     date-text="Datum"
+                     time-text="Tid"
+                     clear-text="Rensa"
+                     close-text="Stäng"/>
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-default btn-sm" ng-click="openCalendar($event, 'from')"><i
+                      class="fa fa-calendar"></i></button>
+                </span>
+            </div>
+          </div>
+          <span> - </span>
+
+          <div class="debug-search-datepicker">
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="Till" datetime-picker="dd MMM yyyy HH:mm"
+                     ng-model="retroLog.to"
+                     is-open="dtPickerOpen.to"
+                     datepicker-options="datePickerOptions"
+                     timepicker-options="timePickerOptions"
+                     today-text="Idag"
+                     now-text="Nu"
+                     date-text="Datum"
+                     time-text="Tid"
+                     clear-text="Rensa"
+                     close-text="Stäng"/>
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-default btn-sm" ng-click="openCalendar($event, 'to')"><i
+                      class="fa fa-calendar"></i></button>
+                </span>
+            </div>
+          </div>
+        </div>
+        <input type="submit" ng-click="search(searchTerm)"
+               style="position: absolute; left: -9999px; width: 1px; height: 1px;"/>
+      </form>
+    </div>
+  </div>
+  <hr>
+  <div class="row device-row margin-bottom-20 margin-top-20">
+    <div class="col-xs-2 sign-wrapper">
+      <div class="sign device">
+        <i class="fa fa-database icon-jumbo"></i>
+      </div>
+    </div>
+    <div class="col-xs-10 debug-ticket-wrapper">
+      <debug-ticket ng-repeat="data in activeSummary.devices" ticket-data="data"
+                    prev-ticket-data="prevSummary.devices[$index]"
+                    class="ticket" ng-class="{'animated fadeInRightBig': !activeTickets[data.entity.identifier]}"
+                    download-button-click="downloadDeviceLog" info-button-click="showDeviceDetails"
+                    file-button-click="showDeviceLogSneakPeek" ctr-duration="ctrSpeed"></debug-ticket>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 text-center">
+      <hr style="width:40%; display:inline-block; float:left;">
+      <i class="fa fa-cloud icon-large icon-t5 no-margin"></i>
+      <span style="color: white; position: absolute; left: 48.8%; top: 26%; font-size: 150%;">T5</span>
+      <hr style="width:40%; display:inline-block; float:right;">
+    </div>
+  </div>
+  <div class="row patient-row margin-top-20">
+    <div class="col-xs-2 sign-wrapper">
+      <div class="sign client">
+        <i class="fa fa-desktop icon-jumbo"></i>
+      </div>
+    </div>
+    <div class="col-xs-10 debug-ticket-wrapper">
+      <debug-ticket ng-repeat="data in activeSummary.clients" ticket-data="data"
+                    prev-ticket-data="prevSummary.clients[$index]"
+                    class="ticket" ng-class="{'animated fadeInRightBig': !activeTickets[data.entity.identifier]}"
+                    download-button-click="downloadClientLog" info-button-click="showClientDetails"
+                    file-button-click="showClientLogSneakPeek" ctr-duration="ctrSpeed"></debug-ticket>
+    </div>
+  </div>
+  <debug-slide dbg-template-url="views/slideentitytemplate.html" dbg-slide-model="slideEntityData"
+               dbg-show-slide="showEntitySlide" dbg-close="toggleEntitySlide"></debug-slide>
+  <debug-slide dbg-template-url="views/slidelogtemplate.html" dbg-slide-model="slideLogData"
+               dbg-show-slide="showLogSlide" dbg-close="toggleLogSlide"></debug-slide>
+</div>

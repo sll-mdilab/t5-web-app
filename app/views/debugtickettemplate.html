@@ -1,0 +1,24 @@
+<div class="debug-ticket">
+  <div class="debug-ticket-header text-center">
+    <h4 title="{{ticketDetails.entity.displayName}}">{{ticketDetails.entity.displayName}}</h4>
+  </div>
+  <div class="debug-ticket-content">
+    <div class="tx-success">
+      <p class="tx-count"><counter ctr-to="ticketDetails.messages.success" ctr-from="prevTicketDetails.messages.success" ctr-duration="ctrDuration"></counter></p>
+      <p class="tx-type">Successful</p>
+    </div>
+    <hr class="tx-separator">
+    <div class="tx-failed">
+      <p class="tx-count"><counter ctr-to="ticketDetails.messages.failed" ctr-from="prevTicketDetails.messages.failed" ctr-duration="ctrDuration"></counter></p>
+      <p class="tx-type">Failed</p>
+    </div>
+    <hr class="tx-separator">
+  </div>
+  <div class="debug-ticket-footer">
+    <ul class="debug-ticket-options">
+      <li class="debug-ticket-option"><a ng-click="download()"><i ng-class="{'fa fa-floppy-o': !downloading, 'fa fa-spinner spinning': downloading}"></i></a></li>
+      <li class="debug-ticket-option"><a ng-click="file()"><i class="fa fa-file-code-o"></i></a></li>
+      <li class="debug-ticket-option"><a ng-click="info()"><i class="fa fa-info-circle"></i></a></li>
+    </ul>
+  </div>
+</div>

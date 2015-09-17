@@ -1,0 +1,57 @@
+<script type="text/ng-template" id="device-menu.tpl.html">
+  <a>
+    <div class="row">
+      <div class="col-xs-4 text-center">
+        <img ng-class="{'not-visible': !match.label.profileURL}" ng-src="{{match.label.profileURL}}"
+             alt="Thumbnail"
+             style="max-width:46px"/>
+      </div>
+      <div class="col-xs-8">
+        <h5 class="list-group-item-heading" ng-bind-html="match.label.name | typeaheadHighlight:query"></h5>
+
+        <p class="mute-text list-group-item-text" ng-bind-html="match.label.id | typeaheadHighlight:query"></p>
+      </div>
+    </div>
+  </a>
+</script>
+<div class="modal-header">
+  <h3 class="modal-title">Sök efter enhet</h3>
+</div>
+<div class="modal-body text-center">
+  <div>
+    <label class="text-label">Skriv för att söka</label>
+    <input type="text" ng-model="deviceSearch" typeahead="device for device in searchDevice($viewValue)"
+           typeahead-template-url="device-menu.tpl.html"
+           typeahead-on-select="selectDevice($item, $model, $label)"
+           class="form-control ng-isolate-scope ng-valid ng-dirty search-field" placeholder="Enhetsnummer"
+           autofocus>
+  </div>
+  <hr ng-show="selectedDevice">
+  <div ng-show="selectedDevice" class="row">
+    <div class="col-sm-7">
+      <div ng-include="'views/deviceprofile.html'"></div>
+    </div>
+    <div class="col-sm-5">
+      <div class="broker-select-list">
+        <div class="broker-select-list-search input-group input-group-sm">
+          <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
+          <input type="text" id="broker-query-input" class="form-control form-control-xs" ng-model="receiverQuery" placeholder="Sök på mottagare"/>
+        </div>
+        <div class="broker-select-list-result">
+          <ul>
+            <li ng-repeat="receiver in fullReceiverList | filter:{systemName: receiverQuery}">
+              <div class="checkbox">
+                <label><input type="checkbox"
+                              ng-model="selectedReceivers[$index]">{{receiver.systemName}}</label>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-primary" ng-click="ok()"><i class="glyphicon glyphicon-ok"></i> OK</button>
+  <button class="btn btn-warning" ng-click="cancel()"><i class="glyphicon glyphicon-remove"></i> Avbryt</button>
+</div>

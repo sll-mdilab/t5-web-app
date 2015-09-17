@@ -1,0 +1,20 @@
+<pageslide ps-open="dbgShowSlide" ps-size="30%">
+  <div class="ng-pageslide-content">
+    <div ng-hide="dbgSlideModel.log" class="spinner-overlay position-set bg-blue">
+      <p class="loading big">
+        <span>.</span><span>.</span><span>.</span>
+      </p>
+    </div>
+    <a class="back-btn" ng-click="dbgClose()"><i class="fa fa-chevron-circle-right"></i></a>
+
+    <h2>
+      <i
+        ng-class="{'fa fa-database': dbgSlideModel.type === 'device', 'fa fa-desktop': dbgSlideModel.type === 'client'}"
+        style="margin-right:10px;"></i>
+      {{dbgSlideModel.entity.displayName}}</h2>
+    <h4>Log:</h4>
+    <div class="log-container">
+      <p class="log-msg" ng-repeat="entry in dbgMsgs track by $index" ng-bind="entry"></p>
+    </div>
+  </div>
+</pageslide>

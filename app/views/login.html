@@ -1,0 +1,17 @@
+<div class="text-center">
+  <div class="logo-wrapper text-center">
+    <div class="logo">
+      <img src="images/innovationsplatsen-stripped.jpg" alt="Innovationsplatsen logo" style="max-width:100%">
+    </div>
+  </div>
+  <div class="login-form-wrapper">
+    <form class="form-signin" name="loginForm"
+          ng-submit="login(credentials)" novalidate>
+      <input type="text" placeholder="Personnummer" class="form-control" ng-model="credentials.username" required
+             autofocus>
+      <input type="password" placeholder="Lösenord" class="form-control" ng-model="credentials.password" required>
+
+      <button type="submit" class="btn btn-success btn-block">Logga in</button>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,12 @@
+<div class="device-profile">
+  <div class="row">
+    <div class="col-xs-4">
+      <img ng-src="{{selectedDevice.profileURL}}" style="max-width:100%" ng-show="selectedDevice.profileURL" alt="Profilbild">
+    </div>
+    <div class="col-xs-8">
+      <h3 class="patient-info" ng-bind="selectedDevice.name"></h3>
+      <p class="patient-info text-muted" ng-show="selectedDevice.id"><i class="glyphicon glyphicon-tag"></i> {{selectedDevice.id}}</p>
+      <p class="patient-info text-muted" ng-show="selectedDevice.type"><i class="glyphicon glyphicon-bookmark"></i> {{selectedDevice.type}}</p>
+    </div>
+  </div>
+</div>

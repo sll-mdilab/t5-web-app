@@ -1,0 +1,68 @@
+<div class="container">
+  <div class="panel panel-primary panel-custom">
+    <div class="panel-heading">
+      <h3 class="panel-title">T5 Live Data Stream</h3><br>
+      <div class="dropdown">
+        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu0" data-toggle="dropdown" aria-expanded="false">
+          Patient <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu0">
+
+          <li ng-repeat="encounter in encounters track by encounter.id" role="presentation"><a role="menuitem" tabindex="-1" ng-click="patientSelect($event, encounter.patient.reference)">{{ encounter.patient.reference }}</a></li>
+          <!-- <li role="presentation"><a role="menuitem" tabindex="-1" >19101010-2425</a></li> -->
+        </ul>
+      </div>
+    </div>
+    <div class="panel-body">
+      <div class="row" ng-show="currentPatient">
+        <div class="col-md-6">
+          <div class="panel panel-primary panel-custom">
+            <div class="panel-heading panel-heading-custom" >
+              <div class="dropdown" >
+                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="false">
+                  Data <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                  <li ng-repeat="codeName in codeNames track by codeName.coding[0].code" role="presentation"><a role="menuitem" tabindex="-1" ng-click="codeSelect($event, boxes[0], codeName)">{{ codeName.text | trimMetricText }}</a></li>
+                </ul>
+                <h5 class="inline-block margin-left-20" ng-bind="boxes[0].codeText | trimMetricText"></h5>
+                <div class="pull-right">
+                  <span class="no-signal-indicator blink" ng-show="noSignal"></span>
+                </div>
+              </div>
+            </div>
+            <div class="panel-body">
+              <fhir-waveform-canvas ng-if="isWaveformData(boxes[0])" chart-data="boxes[0]" chart-config="boxConfigs[0]"></fhir-waveform-canvas>
+              <live-stream-table ng-if="!isWaveformData(boxes[0])" table-data="boxes[0]"></live-stream-table>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="panel panel-primary panel-custom">
+            <div class="panel-heading panel-heading-custom">
+              <div class="dropdown" >
+                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-expanded="false">
+                  Data <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu2">
+                  <li ng-repeat="codeName in codeNames track by codeName.coding[0].code" role="presentation"><a role="menuitem" tabindex="-1" ng-click="codeSelect($event, boxes[1], codeName)">{{ codeName.text | trimMetricText }}</a></li>
+                </ul>
+                <h5 class="inline-block margin-left-20" ng-bind="boxes[1].codeText | trimMetricText"></h5>
+                <div class="pull-right">
+                  <span class="no-signal-indicator blink" ng-show="noSignal"></span>
+                </div>
+              </div>
+            </div>
+            <div class="panel-body">
+              <fhir-waveform-canvas ng-if="isWaveformData(boxes[1])" chart-data="boxes[1]" chart-config="boxConfigs[1]"></fhir-waveform-canvas>
+              <live-stream-table ng-if="!isWaveformData(boxes[1])" table-data="boxes[1]"></live-stream-table>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

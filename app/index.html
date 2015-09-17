@@ -1,0 +1,161 @@
+<!doctype html>
+<html class="no-js" ng-app="fhirWebApp">
+<head>
+  <meta charset="utf-8">
+  <title ng-bind="title">Innovationsplatsen</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width">
+  <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+  <!-- build:css(.) styles/vendor.css -->
+  <!-- bower:css -->
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-theme.css" />
+  <link rel="stylesheet" href="bower_components/angular-ui-grid/ui-grid.css" />
+  <link rel="stylesheet" href="bower_components/nvd3/build/nv.d3.css" />
+  <!-- endbower -->
+  <!-- endbuild -->
+  <!-- build:css(.tmp) styles/main.css -->
+  <link rel="stylesheet" href="styles/main.css">
+  <link rel="stylesheet" href="styles/animations.css">
+  <link rel="stylesheet" href="styles/animate.css">
+  <link rel="stylesheet" href="styles/font-awesome.min.css">
+  <!-- endbuild -->
+</head>
+<body ng-controller="ApplicationCtrl">
+<div class="app-loading-container" ng-if="::false">
+  <div class="app-loading-content">
+    <div class="app-loading-message">
+      <p><i class="fa fa-spinner fa-spin fa-4x"></i></p>
+    </div>
+  </div>
+</div>
+<div ng-controller="LayoutCtrl">
+  <!--[if lt IE 7]>
+  <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
+    your browser</a> to improve your experience.</p>
+  <![endif]-->
+
+  <!-- Add your site or application content here -->
+  <div class="header">
+    <div class="navbar navbar-default" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                  data-target="#js-navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+
+          <a class="navbar-brand" href="#/">T5</a>
+        </div>
+        <div class="collapse navbar-collapse" id="js-navbar-collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li ng-class="{active: isActive('/preflight')}"><a ng-href="#/preflight">Pre Flight</a></li>
+            <li ng-class="{active: isActive('/pid')}"><a ng-href="#/pid">PID</a></li>
+            <li ng-class="{active: isActive('/stream')}"><a ng-href="#/stream">Live Stream</a></li>
+            <li ng-class="{active: isActive('/debug') || isActive('/brokering')}" dropdown>
+              <a href="" type="button" dropdown-toggle>Admin <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                <li role="menuitem"><a ng-href="#/debug">Felsökning</a></li>
+                <li role="menuitem"><a ng-href="#/brokering">HL7v2 Vidarebefordring</a></li>
+              </ul>
+            </li>
+            <li ng-class="{active: isActive('/login')}"><a href="" ng-click="logout()"><span ng-show="currentUser">Logga ut</span><span
+              ng-hide="currentUser">Logga in</span></a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <div ng-view></div>
+    <div class="push"></div>
+  </div>
+  <div class="footer" ng-if="currentUser" ng-class="{'footer-fixed': bodyHeightSmallerThanViewport()}">
+    <div class="container text-center">
+      <div class="col-xs-4">
+        <p><span class="visible-xs-block"><i class="glyphicon glyphicon-user"></i></span><span class="hidden-xs"><i
+          class="glyphicon glyphicon-user"></i> </span>{{currentUser.name}}</p>
+      </div>
+      <div class="col-xs-4">
+        <p><span class="visible-xs-block"><i class="glyphicon glyphicon-tag"></i></span><span class="hidden-xs"><i
+          class="glyphicon glyphicon-tag"></i> </span>{{currentUser.id }}</p>
+      </div>
+      <div class="col-xs-4">
+        <p style="text-transform: capitalize"><span class="visible-xs-block"><i
+          class="glyphicon glyphicon-wrench"></i></span><span class="hidden-xs"><i
+          class="glyphicon glyphicon-wrench"></i> </span>{{currentUser.role}}
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- build:js(.) scripts/vendor.js -->
+<!-- bower:js -->
+<script src="bower_components/jquery/dist/jquery.js"></script>
+<script src="bower_components/angular/angular.js"></script>
+<script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+<script src="bower_components/angular-cookies/angular-cookies.js"></script>
+<script src="bower_components/angular-resource/angular-resource.js"></script>
+<script src="bower_components/angular-route/angular-route.js"></script>
+<script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+<script src="bower_components/angular-animate/angular-animate.js"></script>
+<script src="bower_components/angular-touch/angular-touch.js"></script>
+<script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+<script src="bower_components/angular-ui-grid/ui-grid.js"></script>
+<script src="bower_components/moment/min/moment.min.js"></script>
+<script src="bower_components/moment/locale/sv.js"></script>
+<script src="bower_components/angular-moment/angular-moment.js"></script>
+<script src="bower_components/angular-base64/angular-base64.js"></script>
+<script src="bower_components/sprintf/src/sprintf.js"></script>
+<script src="bower_components/angular-fhir-resources/dist/angularfhirresources-0.0.6.min.js"></script>
+<script src="bower_components/d3/d3.js"></script>
+<script src="bower_components/nvd3/build/nv.d3.js"></script>
+<script src="bower_components/angular-pageslide-directive/dist/angular-pageslide-directive.js"></script>
+<script src="bower_components/FileSaver/FileSaver.js"></script>
+<script src="bower_components/angular-uuid-service/angular-uuid-service.js"></script>
+<script src="bower_components/bootstrap-ui-datetime-picker/dist/datetime-picker.min.js"></script>
+<script src="bower_components/cbuffer/cbuffer.js"></script>
+<!-- endbower -->
+<!-- endbuild -->
+
+<!-- build:js({.tmp,app}) scripts/scripts.js -->
+<script src="scripts/app.js"></script>
+<script src="scripts/services/user_roles.js"></script>
+<script src="scripts/services/session.js"></script>
+<script src="scripts/services/authservice.js"></script>
+<script src="scripts/services/auth_events.js"></script>
+<script src="scripts/filters/zipformat.js"></script>
+<script src="scripts/filters/phoneformat.js"></script>
+<script src="scripts/controllers/pid.js"></script>
+<script src="scripts/controllers/login.js"></script>
+<script src="scripts/controllers/application.js"></script>
+<script src="scripts/directives/fhirfocuscontextchart.js"></script>
+<script src="scripts/controllers/addencounter.js"></script>
+<script src="scripts/controllers/preflight.js"></script>
+<script src="scripts/directives/contenteditable.js"></script>
+<script src="scripts/services/t5utils.js"></script>
+<script src="scripts/filters/trimmetrictext.js"></script>
+<script src="scripts/controllers/layout.js"></script>
+<script src="scripts/services/fhirapi.js"></script>
+<script src="scripts/controllers/stream.js"></script>
+<script src="scripts/controllers/debug.js"></script>
+<script src="scripts/directives/debugticket.js"></script>
+<script src="scripts/services/debugbackend.js"></script>
+<script src="scripts/directives/counter.js"></script>
+<script src="scripts/directives/debugslide.js"></script>
+<script src="scripts/directives/livestreamtable.js"></script>
+<script src="scripts/directives/fhirwaveformcanvas.js"></script>
+<script src="scripts/services/confirmmodalfactory.js"></script>
+<script src="scripts/controllers/hl7brokeringmanagement.js"></script>
+<script src="scripts/services/adddevicemodalfactory.js"></script>
+<script src="scripts/services/editdeviceusestatementmodalfactory.js"></script>
+<script src="scripts/services/addpatientmodalfactory.js"></script>
+<!-- endbuild -->
+</body>
+</html>

@@ -1,0 +1,82 @@
+<div class="container">
+  <p>
+    <button type="button" class="btn btn-block btn-success" ng-click="openAddPatientModal()"><i
+      class="glyphicon glyphicon-plus"></i></button>
+  </p>
+  <div class="row panel-heading">
+    <div class="col-xs-4">Namn</div>
+    <div class="col-xs-4">Personnummer</div>
+    <div class="col-xs-4">Adress</div>
+  </div>
+  <accordion close-others="true">
+    <accordion-group
+      ng-repeat="encounter in encounters | filter: {status: filterStatus} | orderBy:['status', 'period.start']">
+      <accordion-heading>
+        <div class="row">
+          <div class="col-xs-4"
+               ng-bind="encounter.patient.details.name[0].given[0] + ' ' + encounter.patient.details.name[0].family[0]"></div>
+          <div class="col-xs-4" ng-bind="encounter.patient.details.identifier[0].value"></div>
+          <div class="col-xs-4" ng-bind="encounter.patient.details.address[0].line + ', ' + encounter.patient.details.address[0].postalCode + ', ' + encounter.patient.details.address[0].city"></div>
+        </div>
+      </accordion-heading>
+      <div ng-include="'views/detailedinfo.html'"></div>
+    </accordion-group>
+  </accordion>
+  <canvas class="not-visible" id="barcode"></canvas>
+  <script type="text/ng-template" id="practitioner-menu.tpl.html">
+    <a>
+      <div class="row">
+        <div class="col-xs-4 text-center">
+          <img ng-class="{'not-visible': !match.label.photo.url}" ng-src="{{match.label.photo.url}}" alt="Thumbnail"
+               style="max-width:46px"/>
+        </div>
+        <div class="col-xs-8">
+          <h4 class="list-group-item-heading"
+              ng-bind-html="(match.label.name.text)| typeaheadHighlight:query"></h4>
+
+          <p class="mute-text list-group-item-text" ng-bind-html="match.label.id | typeaheadHighlight:query"></p>
+        </div>
+      </div>
+    </a>
+  </script>
+  <script type="text/ng-template" id="addPatient.html">
+    <div class="modal-header">
+      <h3 class="modal-title">Lägg till patient</h3>
+    </div>
+    <div class="modal-body text-center">
+      <div>
+        <form>
+          <label class="text-label">Skriv för att söka</label>
+          <input type="text" ng-model="patientSearch" placeholder="Personnummer"
+                 class="form-control ng-isolate-scope ng-valid ng-dirty search-field"
+                 autofocus>
+          <input type="submit" ng-click="personInformationLookup(patientSearch)"
+                 style="position: absolute; left: -9999px; width: 1px; height: 1px;"/>
+        </form>
+      </div>
+      <div class="row">
+        <div ng-show="lookupInProgress" class="spinner-overlay">
+          <div class="loading-box">
+            <p class="text-center">
+              <span ng-show="patientAlreadyExists">Hämtar data.</span><span ng-hide="patientAlreadyExists">Individen finns inte i systemet.<br/>Utför en personupplysning.</span>
+            </p>
+
+            <p class="loading">
+              <span>.</span><span>.</span><span>.</span>
+            </p>
+          </div>
+        </div>
+        <div ng-include="'views/addpatientform.html'"></div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-info pull-left" btn-checkbox ng-model="printBracelet" ng-click="extendConfirmButtonText()">
+        Skriv ut armband
+      </button>
+      <button class="btn btn-primary animate-expansion" ng-class="{'animate-expansion-change': printBracelet}"
+              ng-click="ok()">Lägg till<span
+        ng-class="{'not-visible':!showExtendedConfirmText}"> och skriv ut armband</span></button>
+      <button class="btn btn-warning" ng-click="cancel()">Avbryt</button>
+    </div>
+  </script>
+</div>

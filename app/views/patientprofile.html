@@ -1,0 +1,13 @@
+<div class="patient-profile">
+  <div class="row">
+    <div class="col-xs-4">
+      <img ng-src="{{patient.profileURL}}" class="profile-photo" ng-show="patient.profileURL" alt="Profilbild">
+    </div>
+    <div class="col-xs-8">
+      <h3 class="patient-info" ng-bind="patient.name"></h3>
+      <p class="patient-info text-muted" ng-show="patient.id"><i class="glyphicon glyphicon-tag"></i> {{patient.id}}</p>
+      <p class="patient-info text-muted" ng-show="patient.street"><i class="glyphicon glyphicon-home"></i> {{patient.street}}<br/><i class="glyphicon glyphicon-home not-visible"></i> {{patient.zip | zipFormat}}, {{patient.city}}</p>
+      <p class="patient-info text-muted" ng-show="patient.tel"><i class="glyphicon glyphicon-phone"></i> {{patient.tel | phoneFormat}}</p>
+    </div>
+  </div>
+</div>

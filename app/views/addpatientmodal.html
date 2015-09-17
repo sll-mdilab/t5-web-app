@@ -1,0 +1,37 @@
+<script type="text/ng-template" id="patient-menu.tpl.html">
+  <a>
+    <div class="row">
+      <div class="col-xs-4 text-center">
+        <img ng-class="{'not-visible': !match.label.patient.profileURL}"
+             ng-src="{{match.label.patient.profileURL}}"
+             alt="Thumbnail" style="max-width:46px"/>
+      </div>
+      <div class="col-xs-8">
+        <h5 class="list-group-item-heading"
+            ng-bind-html="match.label.patient.name | typeaheadHighlight:query"></h5>
+
+        <p class="mute-text list-group-item-text"
+           ng-bind-html="match.label.patient.id | typeaheadHighlight:query"></p>
+      </div>
+    </div>
+  </a>
+</script>
+<div class="modal-header">
+  <h3 class="modal-title">Sök efter patient</h3>
+</div>
+<div class="modal-body text-center">
+  <div>
+    <label class="text-label">Skriv för att söka</label>
+    <input type="text" ng-model="patientSearch" typeahead="patient for patient in searchPatient($viewValue)"
+           typeahead-template-url="patient-menu.tpl.html"
+           typeahead-on-select="selectPatient($item, $model, $label)"
+           class="form-control ng-isolate-scope ng-valid ng-dirty search-field"
+           placeholder="Namn eller Personnummer" autofocus>
+  </div>
+  <hr ng-show="patient">
+  <div ng-include="'views/patientprofile.html'"></div>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-primary" ng-click="ok()"><i class="glyphicon glyphicon-ok"></i> OK</button>
+  <button class="btn btn-warning" ng-click="cancel()"><i class="glyphicon glyphicon-remove"></i> Avbryt</button>
+</div>

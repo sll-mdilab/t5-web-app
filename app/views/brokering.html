@@ -1,0 +1,23 @@
+<div class="container">
+  <div class="broker-grid">
+    <div ng-show="vm.showSpinner" class="spinner-overlay"><i class="fa fa-spinner fa-spin fa-2x"></i></div>
+    <div ui-grid="vm.gridOptions" ng-style="{height: vm.getGridHeight()}" ui-grid-edit
+         ui-grid-auto-resize></div>
+    <hr>
+    <div>
+      <div class="broker-form-input" ng-style="{width: vm.dim.systemName + '%'}">
+        <input type="text" class="form-control" placeholder="Systemnamn" ng-model="vm.newReceiver.systemName">
+      </div>
+      <div class="broker-form-input" ng-style="{width: vm.dim.address + '%'}">
+        <input type="text" class="form-control" placeholder="Adress" ng-model="vm.newReceiver.address">
+      </div>
+      <div class="broker-form-input" ng-style="{width: vm.dim.port + '%'}">
+        <input type="number" class="form-control" placeholder="Port" ng-model="vm.newReceiver.port">
+      </div>
+      <button class="btn btn-success" type="button" ng-click="vm.addReceiver()" style="vertical-align: baseline;"
+              ng-style="{width:vm.dim.delete + '%'}"><i
+        class="glyphicon glyphicon-plus"></i></button>
+      <!-- /input-group -->
+    </div>
+  </div>
+</div>
