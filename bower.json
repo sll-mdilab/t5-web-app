@@ -14,7 +14,7 @@
     "angular-bootstrap": "~0.13.0",
     "angular-ui-grid": "~3.0.0-rc.21",
     "angular-moment": "~0.10.1",
-	"angular-fhir-resources": "sll-mdilab/angular-fhir-resources-pub",
+	"angular-fhir-resources": "sll-mdilab/angular-fhir-resources",
     "d3": "~3.5.5",
     "nvd3": "~1.8.1",
     "angular-pageslide-directive": "~1.0.3",
