@@ -1,5 +1,5 @@
-# FHIR Monitoring Web App
-The FHIR Monitoring Web application is an AngularJS app developed at the SLL Medical Device Integration (MDI) Lab. 
+# T5 Web App
+The T5 Web application is an AngularJS app developed at the SLL Medical Device Integration (MDI) Lab. 
 Even though the implementation/evaluation of clinical applications is out of scope of the MDI Lab, 
 a small set of proof-of-concept applications have been implemented. 
 The purpose of these applications is to facilitate administration, troubleshooting and demonstration 
