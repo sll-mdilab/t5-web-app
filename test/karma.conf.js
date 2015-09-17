@@ -38,7 +38,7 @@ module.exports = function(config) {
       'bower_components/angular-moment/angular-moment.js',
       'bower_components/angular-base64/angular-base64.js',
       'bower_components/sprintf/src/sprintf.js',
-      'bower_components/angular-fhir-resources/dist/angularfhirresources-0.0.6.min.js',
+      'bower_components/angular-fhir-resources/angularfhirresources-0.0.6.min.js',
       'bower_components/d3/d3.js',
       'bower_components/nvd3/build/nv.d3.js',
       'bower_components/angular-pageslide-directive/dist/angular-pageslide-directive.js',
