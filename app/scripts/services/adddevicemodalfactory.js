@@ -96,8 +96,7 @@
           return $scope.selectedReceivers[i];
         });
         if(!$scope.selectedDevice){
-          $scope.selectedDevice = fhirDevice.getDefaultDevice();
-          $scope.selectedDevice.id = $scope.deviceSearch;
+          $scope.selectedDevice = fhirDevice.getDefaultDevice($scope.deviceSearch);
         }
         $modalInstance.close({selectedDevice: $scope.selectedDevice, selectedReceivers: returnReceivers});
       };
