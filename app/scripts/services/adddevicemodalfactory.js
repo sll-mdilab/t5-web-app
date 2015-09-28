@@ -13,12 +13,12 @@
     .module('fhirWebApp')
     .factory('addDeviceModalFactory', addDeviceModalFactory);
 
-  addDeviceModalFactory.$inject = ['$modal'];
+  addDeviceModalFactory.$inject = ['$modal', 'fhirDevice'];
 
   function addDeviceModalFactory($modal) {
     var vm = {};
     vm.addDeviceCtrl = _addDeviceCtrl;
-    vm.addDeviceCtrl.$inject = ['$scope', '$modalInstance', 'fullDeviceList', 'fullReceiverList'];
+    vm.addDeviceCtrl.$inject = ['$scope', '$modalInstance', 'fullDeviceList', 'fullReceiverList', 'fhirDevice'];
 
     return {
       show: show,
@@ -66,7 +66,7 @@
     }
 
     // Controller for the "Add Device" modal
-    function _addDeviceCtrl($scope, $modalInstance, fullDeviceList, fullReceiverList) {
+    function _addDeviceCtrl($scope, $modalInstance, fullDeviceList, fullReceiverList, fhirDevice) {
 
       $scope.receiverQuery = undefined;
       $scope.fullReceiverList = fullReceiverList;
@@ -95,6 +95,10 @@
         var returnReceivers = $scope.fullReceiverList.filter(function (r, i) {
           return $scope.selectedReceivers[i];
         });
+        if(!$scope.selectedDevice){
+          $scope.selectedDevice = fhirDevice.getDefaultDevice();
+          $scope.selectedDevice.id = $scope.deviceSearch;
+        }
         $modalInstance.close({selectedDevice: $scope.selectedDevice, selectedReceivers: returnReceivers});
       };
 

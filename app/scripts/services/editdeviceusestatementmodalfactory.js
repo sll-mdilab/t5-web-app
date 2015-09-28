@@ -120,7 +120,7 @@
       };
 
       $scope.remove = function () {
-        var deleteUser = $window.confirm('Bekräfta borttagning av enheten: ' + $scope.selectedDevice.name);
+        var deleteUser = $window.confirm('Bekräfta borttagning av enheten');
         if (deleteUser) {
           $modalInstance.close({selectedDeviceUseStatement: activeStatement, shouldRemove: true});
         }
