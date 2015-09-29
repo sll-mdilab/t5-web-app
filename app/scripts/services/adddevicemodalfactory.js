@@ -26,11 +26,11 @@
       setReceiverList: setReceiverList
     };
 
-    function setDeviceList(deviceList){
+    function setDeviceList(deviceList) {
       vm.fullDeviceList = deviceList;
     }
 
-    function setReceiverList(receiverList){
+    function setReceiverList(receiverList) {
       vm.fullReceiverList = receiverList;
     }
 
@@ -71,6 +71,8 @@
       $scope.receiverQuery = undefined;
       $scope.fullReceiverList = fullReceiverList;
       $scope.selectedReceivers = [];
+      $scope.deviceSearch = undefined;
+      $scope.selectedDeviceIsNew = false;
       for (var i = 0; i < fullReceiverList.length; i++) {
         $scope.selectedReceivers.push(false);
       }
@@ -91,12 +93,19 @@
         $scope.deviceSearch = undefined;
       };
 
+      $scope.addNewDevice = function (newDeviceId) {
+        $scope.selectedDevice = fhirDevice.getDefaultDevice($scope.deviceSearch);
+        $scope.selectedDevice.id = newDeviceId;
+        $scope.selectedDeviceIsNew = true;
+        $scope.deviceSearch = undefined;
+      };
+
       $scope.ok = function () {
         var returnReceivers = $scope.fullReceiverList.filter(function (r, i) {
           return $scope.selectedReceivers[i];
         });
-        if(!$scope.selectedDevice){
-          $scope.selectedDevice = fhirDevice.getDefaultDevice($scope.deviceSearch);
+        if($scope.selectedDeviceIsNew){
+          fhirDevice.createDevice($scope.selectedDevice);
         }
         $modalInstance.close({selectedDevice: $scope.selectedDevice, selectedReceivers: returnReceivers});
       };

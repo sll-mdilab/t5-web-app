@@ -27,6 +27,9 @@
            autofocus>
   </div>
   <hr ng-show="selectedDevice">
+  <div ng-show="!selectedDevice && deviceSearch">
+    <button class="btn btn-link" ng-click="addNewDevice(deviceSearch)"><i class="glyphicon glyphicon-plus"></i> Lägg till enhet med id '<span ng-bind="deviceSearch"></span>'</button>
+  </div>
   <div ng-show="selectedDevice" class="row">
     <div class="col-sm-7">
       <div ng-include="'views/deviceprofile.html'"></div>
@@ -52,6 +55,6 @@
   </div>
 </div>
 <div class="modal-footer">
-  <button class="btn btn-primary" ng-click="ok()"><i class="glyphicon glyphicon-ok"></i> OK</button>
+  <button class="btn btn-primary" ng-click="ok()" ng-disabled="!selectedDevice"><i class="glyphicon glyphicon-ok"></i> OK</button>
   <button class="btn btn-warning" ng-click="cancel()"><i class="glyphicon glyphicon-remove"></i> Avbryt</button>
 </div>
