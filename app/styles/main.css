@@ -461,6 +461,15 @@ img.profile-photo {
   color: #222;
 }
 
+.editable-icon{
+  position: absolute;
+  font-size: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  right: -20px;
+  color:#999;
+}
+
 .inline-block {
   display: inline-block;
 }
