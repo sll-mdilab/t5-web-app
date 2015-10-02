@@ -39,7 +39,7 @@
         Wf.config = scope.config;
         Wf.config.dim = Wf.config.dim || {height: 100, width: 435};
         Wf.config.color = Wf.config.color || '#fff';
-        Wf.activeYScaleDomain = Wf.config.scale ? Wf.config.scale.y : [0, 1];
+        Wf.activeYScaleDomain = [0, 1];
         Wf.canvas = document.createElement('canvas');
         angular.element(Wf.canvas).css('background-color', '#222');
         Wf.canvasCtx = Wf.canvas.getContext('2d');
@@ -80,7 +80,7 @@
       }
 
       function emptyDataBuffer() {
-        Wf.dataBuffer = new CBuffer(2048);
+        Wf.dataBuffer = new CBuffer(8192);
         Wf.latestObservations = new CBuffer(5);
       }
 
@@ -111,6 +111,10 @@
         if (!Wf.painter.previousPoint) {
           Wf.canvasCtx.beginPath();
           Wf.painter.currentPoint = Wf.dataBuffer.get(0);
+          Wf.canvasCtx.moveTo(Wf.xScale(Wf.painter.currentPoint.x % Wf.xMax), Wf.yScale(Wf.painter.currentPoint.y));
+        } else if (Wf.painter.currentPoint.x - Wf.painter.previousPoint.x >= 500) {
+          // Don't draw a line between between sample batches if it differs more than specified value
+          // This to not get a faulty "flat line".
           Wf.canvasCtx.moveTo(Wf.xScale(Wf.painter.currentPoint.x % Wf.xMax), Wf.yScale(Wf.painter.currentPoint.y));
         } else {
           Wf.canvasCtx.moveTo(Wf.xScale(Wf.painter.previousPoint.x % Wf.xMax), Wf.yScale(Wf.painter.previousPoint.y));
@@ -200,9 +204,9 @@
         }
       }
 
-      function updateScales() {
-        if(Wf.config.scales){
-          Wf.activeYScaleDomain = Wf.config.scales.y;
+      function updateScales(domain) {
+        if (domain) {
+          Wf.activeYScaleDomain = domain;
           Wf.yScale.domain(Wf.activeYScaleDomain);
         }
       }
@@ -238,11 +242,15 @@
 
           var dataStr = newVal.observations[idx].resource.valueSampledData.data;
           var sampledIntervalInMs = newVal.observations[idx].resource.valueSampledData.period;
+          var lowerLimit = newVal.observations[idx].resource.valueSampledData.lowerLimit;
+          var upperLimit = newVal.observations[idx].resource.valueSampledData.upperLimit;
           var startTime = new Date(newVal.observations[idx].resource.appliesDateTime).getTime();
           var obsId = newVal.observations[idx].resource.id;
           var dataArr = dataStr.split(' ');
 
-          // Add data to buffer
+
+          updateScales([lowerLimit, upperLimit]);
+
           addDataToBuffer(dataArr, startTime, sampledIntervalInMs);
           Wf.latestObservations.push(obsId);
         }
@@ -253,8 +261,6 @@
         if (newVal) {
           // Update configs
           Wf.config = newVal;
-
-          updateScales();
 
           // Clear buffer
           Wf.emptyDataBuffer();

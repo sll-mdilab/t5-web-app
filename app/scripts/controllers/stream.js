@@ -38,12 +38,6 @@
       waveformConfig.color = '#ffffff';
       waveformConfig.scales = {y: [0, 1]};
 
-      $scope.codeDomains = {
-        'MDC_ECG_LEAD_I': {y: [-0.55, 1.6]},
-        'MDC_PRESS_BLD_ART': {y: [32, 141]},
-        'MDC_PULS_OXIM_SAT_O2_WAVEFORM': {y: [0, 3.5]}
-      };
-
       $scope.boxConfigs = [
         angular.copy(waveformConfig),
         angular.copy(waveformConfig)
@@ -62,7 +56,6 @@
       var boxIdx = $scope.boxes.indexOf(box);
       if (boxIdx >= 0) {
         $scope.boxConfigs[boxIdx].code = box.code;
-        $scope.boxConfigs[boxIdx].scales = $scope.codeDomains[box.code];
       }
     }
 
