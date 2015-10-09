@@ -11,9 +11,9 @@
     .module('fhirWebApp')
     .controller('StreamCtrl', StreamCtrl);
 
-  StreamCtrl.$inject = ['$scope', '$filter', 'fhirObservation', 'fhirEncounter', '$interval'];
+  StreamCtrl.$inject = ['$scope', '$filter', 'fhirObservation', 'fhirEncounter', '$interval', 'rivtaObservationService'];
 
-  function StreamCtrl($scope, $filter, fhirObservation, fhirEncounter, $interval) {
+  function StreamCtrl($scope, $filter, fhirObservation, fhirEncounter, $interval, rivtaObservationService) {
     $scope.boxes = [{code: undefined}, {code: undefined}];
     $scope.currentPatient = '1212121212';
     $scope.noSignal = false;
@@ -70,7 +70,7 @@
       return box.observations ? !!box.observations[0].resource.valueSampledData : false;
     };
 
-    var timeUntilOld = 10000;
+    const timeUntilOld = 10000;
     var updateValues = function (box) {
       return function () {
         if (!box.code) {
@@ -78,20 +78,31 @@
         }
         var startDate = new Date();
         startDate.setTime(startDate.getTime() - $scope.timeFrame);
-        fhirObservation.getObservationsByPatientId($scope.currentPatient, '>=' + startDate.toISOString(), box.code).then(function (dataElements) {
-          box.observations = $filter('orderBy')(dataElements.entry, 'resource.appliesDateTime', true);
-          if (dataElements.total <= 0) {
-            $scope.noSignal = true;
-            console.warn('No entries were retrieved in the response');
-          } else if (new Date() - new Date(box.observations[0].resource.appliesDateTime) > timeUntilOld) {
-            $scope.noSignal = true;
-            console.warn('Entries retrieved are older than ' + timeUntilOld + 'ms.');
-          } else {
-            $scope.noSignal = false;
-          }
-        });
+
+        if (box.fromRivta) {
+          rivtaObservationService.getObservation($scope.currentPatient, box.code, startDate.toISOString()).then(function (dataElements){
+            handleObservationRequest(dataElements, box);
+          });
+        } else {
+          fhirObservation.getObservationsByPatientId($scope.currentPatient, '>=' + startDate.toISOString(), box.code).then(function (dataElements) {
+            handleObservationRequest(dataElements, box);
+          });
+        }
       };
     };
+
+    function handleObservationRequest(dataElements, box) {
+      box.observations = $filter('orderBy')(dataElements.entry, 'resource.appliesDateTime', true);
+      if (dataElements.total <= 0) {
+        $scope.noSignal = true;
+        console.warn('No entries were retrieved in the response');
+      } else if (new Date() - new Date(box.observations[0].resource.appliesDateTime) > timeUntilOld) {
+        $scope.noSignal = true;
+        console.warn('Entries retrieved are older than ' + timeUntilOld + 'ms.');
+      } else {
+        $scope.noSignal = false;
+      }
+    }
 
     var updateCodeNames = function () {
       var startDate = new Date();

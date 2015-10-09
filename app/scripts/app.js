@@ -16,7 +16,8 @@ angular
     'angularMoment',
     'angularFhirResources',
     'pageslide-directive',
-    'uuid'
+    'uuid',
+    'cb.x2js'
   ])
   .config(function ($routeProvider, USER_ROLES, fhirConfigProvider, fhirAPI) {
     $routeProvider

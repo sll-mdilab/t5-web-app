@@ -46,6 +46,8 @@ module.exports = function(config) {
       'bower_components/angular-uuid-service/angular-uuid-service.js',
       'bower_components/bootstrap-ui-datetime-picker/dist/datetime-picker.min.js',
       'bower_components/cbuffer/cbuffer.js',
+      'bower_components/x2js/xml2json.min.js',
+      'bower_components/angular-x2js/dist/x2js.min.js',
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
       "app/scripts/**/*.js",

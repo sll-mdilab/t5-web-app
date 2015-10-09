@@ -36,6 +36,7 @@
               <live-stream-table ng-if="!isWaveformData(boxes[0])" table-data="boxes[0]"></live-stream-table>
             </div>
           </div>
+          <span><input type="checkbox" ng-model="boxes[0].fromRivta"> Riv TA (Kräver uppkoppling till nätverket på Karolinska, Solna)</span>
         </div>
 
         <div class="col-md-6">
@@ -59,7 +60,7 @@
               <live-stream-table ng-if="!isWaveformData(boxes[1])" table-data="boxes[1]"></live-stream-table>
             </div>
           </div>
-
+          <span><input type="checkbox" ng-model="boxes[1].fromRivta"> Riv TA (Kräver uppkoppling till nätverket på Karolinska, Solna)</span>
         </div>
 
       </div>
