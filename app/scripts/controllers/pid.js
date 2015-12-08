@@ -16,6 +16,9 @@ angular.module('fhirWebApp')
       $scope.loadingChart = false;
       $scope.timeToInactive = 10 * 1000;
 
+      function trimMillis(dateString) {
+        return dateString.substring(0, dateString.length - 5) + 'Z';
+      }
 
       $scope.timeFrames = [
         {label: '10min', value: 10 * 60 * 1000},
@@ -116,7 +119,7 @@ angular.module('fhirWebApp')
       $scope.removeDevice = function (device) {
         $scope.showSpinner = true;
         var updatedStatement = angular.copy(device.original.resource);
-        updatedStatement.whenUsed.end = new Date().toISOString();
+        updatedStatement.whenUsed.end = trimMillis(new Date().toISOString());
         $scope.loadingChart = true;
         fhirDeviceUseStatement.updateDeviceUseStatement(updatedStatement).then(function () {
           $scope.showChart = false;
@@ -267,6 +270,14 @@ angular.module('fhirWebApp')
           {name: ' ', field: 'edit', width: '10%', cellTemplate: editTemplate}
         ]
       };
+//2013-13-14T12:12:12.000
+      function appendMillisIfNeeded(dateString) {
+        if(dateString.length < 24) {
+          return dateString.substring(0, dateString.length - 1) + '.000Z';
+        } else {
+          return dateString;
+        }
+      }
 
       function convertToChartDataModel(code, observationEntity) {
         var chartData = {};
@@ -279,7 +290,7 @@ angular.module('fhirWebApp')
           if (obs.valueQuantity) {
             chartData.values.push({
               series: 0,
-              x: new Date(obs.appliesDateTime),
+              x: new Date(obs.effectiveDateTime),
               y: obs.valueQuantity.value
             });
           }
@@ -330,7 +341,7 @@ angular.module('fhirWebApp')
       $scope.saveUpdates = function () {
         if ($scope.brushExtent) {
           var updatedStatement = angular.copy($scope.selectedDeviceUseStatement.original.resource);
-          updatedStatement.whenUsed.start = new Date($scope.brushExtent[0]).toISOString();
+          updatedStatement.whenUsed.start = trimMillis(new Date($scope.brushExtent[0]).toISOString());
           $scope.loadingChart = true;
           fhirDeviceUseStatement.updateDeviceUseStatement(updatedStatement).then(function () {
             $scope.showChart = false;

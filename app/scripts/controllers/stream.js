@@ -92,11 +92,11 @@
     };
 
     function handleObservationRequest(dataElements, box) {
-      box.observations = $filter('orderBy')(dataElements.entry, 'resource.appliesDateTime', true);
+      box.observations = $filter('orderBy')(dataElements.entry, 'resource.effectiveDateTime', true);
       if (dataElements.total <= 0) {
         $scope.noSignal = true;
         console.warn('No entries were retrieved in the response');
-      } else if (new Date() - new Date(box.observations[0].resource.appliesDateTime) > timeUntilOld) {
+      } else if (new Date() - new Date(box.observations[0].resource.effectiveDateTime) > timeUntilOld) {
         $scope.noSignal = true;
         console.warn('Entries retrieved are older than ' + timeUntilOld + 'ms.');
       } else {
