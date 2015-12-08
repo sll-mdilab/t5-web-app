@@ -270,9 +270,13 @@ angular.module('fhirWebApp')
           {name: ' ', field: 'edit', width: '10%', cellTemplate: editTemplate}
         ]
       };
-
-      function appendMillis(dateString) {
-        return dateString.substring(0, dateString.length - 1) + '.000Z';
+//2013-13-14T12:12:12.000
+      function appendMillisIfNeeded(dateString) {
+        if(dateString.length < 24) {
+          return dateString.substring(0, dateString.length - 1) + '.000Z';
+        } else {
+          return dateString;
+        }
       }
 
       function convertToChartDataModel(code, observationEntity) {
@@ -286,7 +290,7 @@ angular.module('fhirWebApp')
           if (obs.valueQuantity) {
             chartData.values.push({
               series: 0,
-              x: new Date(obs.appliesDateTime),
+              x: new Date(obs.effectiveDateTime),
               y: obs.valueQuantity.value
             });
           }
