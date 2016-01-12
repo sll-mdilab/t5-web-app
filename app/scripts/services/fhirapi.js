@@ -9,8 +9,10 @@
  */
 angular.module('fhirWebApp')
   .constant('fhirAPI', {
-    // Insert your API credentials here
+    // Insert your API credentials or OAuth server details here
     apiUser: 'YOUR_API_USERNAME',
     apiKey: 'YOUR_API_KEY',
-    url: 'YOUR_API_BASE_URL'
+    url: 'YOUR_API_BASE_URL',
+    oauthClientId: 'YOUR_CLIENT_ID',
+    oauthRedirectUri: 'YOUR_REDIRECT_URI'
   });

@@ -18,6 +18,7 @@ angular.module('fhirWebApp')
         $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
         $scope.setCurrentUser(user);
         // Default path on login
+        $location.$$search = {};
         $location.path('/pid');
       }, function () {
         $rootScope.$broadcast(AUTH_EVENTS.loginFailed);

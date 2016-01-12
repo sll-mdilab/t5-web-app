@@ -84,7 +84,7 @@
             handleObservationRequest(dataElements, box);
           });
         } else {
-          fhirObservation.getObservationsByPatientId($scope.currentPatient, '>=' + startDate.toISOString(), box.code).then(function (dataElements) {
+          fhirObservation.getObservationsByPatientId($scope.currentPatient, '>=' + startDate.toISOString(), box.code, 10).then(function (dataElements) {
             handleObservationRequest(dataElements, box);
           });
         }

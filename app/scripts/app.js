@@ -20,10 +20,8 @@ angular
     'cb.x2js'
   ])
   .config(function ($routeProvider, USER_ROLES, fhirConfigProvider, fhirAPI) {
+
     $routeProvider
-      .when('/', {
-        redirectTo: '/login'
-      })
       .when('/login', {
         templateUrl: 'views/login.html',
         controller: 'LoginCtrl',
@@ -70,13 +68,25 @@ angular
           authorizedRoles: [USER_ROLES.admin, USER_ROLES.doctor, USER_ROLES.nurse]
         }
       })
+      .when('/oauth', {
+        templateUrl: 'views/oauth.html',
+        controller: 'OauthCtrl',
+        title:'Oauth2 Authorization'
+      })
+      .when('/oauth_callback', {
+        templateUrl: 'views/oauthcallback.html',
+        controller: 'OauthcallbackCtrl',
+        title:'Oauth2 Verification'
+      })
       .otherwise({
-        redirectTo: '/'
+        redirectTo: '/pid'
       });
 
     // Specify T5-PoC credentials
     fhirConfigProvider.setAPICredentials(fhirAPI.apiUser, fhirAPI.apiKey);
     fhirConfigProvider.setBackendURL(fhirAPI.url);
+    fhirConfigProvider.setOauthClientId(fhirAPI.oauthClientId);
+    fhirConfigProvider.setOauthRedirectUri(fhirAPI.oauthRedirectUri);
   })
   .run(function($rootScope, $location, AUTH_EVENTS, AuthService, amMoment, fhirConfig){
     $rootScope.$on('$routeChangeStart', function(event, next){
@@ -91,7 +101,7 @@ angular
           } else {
             // user is not logged in
             $rootScope.$broadcast(AUTH_EVENTS.notAuthenticated);
-            $location.path('/login');
+            $location.path('/oauth');
           }
         }
       }
