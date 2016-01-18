@@ -91,7 +91,7 @@ angular.module('fhirWebApp')
 
       $scope.addDevice = function (newDevice, receiverRefList) {
         $scope.showSpinner = true;
-        fhirDeviceUseStatement.addDeviceToPatient($scope.patient.id, newDevice.id, $scope.currentUser.id, receiverRefList).then(
+        fhirDeviceUseStatement.addDeviceToPatient($scope.patient.id, newDevice.id, $scope.currentUser, receiverRefList).then(
           function () {
             $scope.getActiveDeviceUseStatements($scope.patient.id);
           });
@@ -234,7 +234,7 @@ angular.module('fhirWebApp')
       // Get all available devices
       $scope.getAllDevices();
       // Get all available receivers
-      $scope.getAllReceivers();
+      //$scope.getAllReceivers();
       //@formatter:off
       var editTemplate =
         '<div class="text-center ui-grid-cell-contents">' +
@@ -270,14 +270,6 @@ angular.module('fhirWebApp')
           {name: ' ', field: 'edit', width: '10%', cellTemplate: editTemplate}
         ]
       };
-//2013-13-14T12:12:12.000
-      function appendMillisIfNeeded(dateString) {
-        if(dateString.length < 24) {
-          return dateString.substring(0, dateString.length - 1) + '.000Z';
-        } else {
-          return dateString;
-        }
-      }
 
       function convertToChartDataModel(code, observationEntity) {
         var chartData = {};
@@ -306,7 +298,7 @@ angular.module('fhirWebApp')
         var dataArr = [];
         fhirObservation.getActiveObservationCodesByDeviceId(deviceId, dateRange).then(function (codes) {
           angular.forEach(codes, function (code) {
-            prom.push(fhirObservation.getObservationsByDeviceId(deviceId, dateRange, code).then(function (observationEntity) {
+            prom.push(fhirObservation.getObservationsByDeviceId(deviceId, dateRange, code, 10).then(function (observationEntity) {
               dataArr.push(convertToChartDataModel(code, observationEntity));
             }));
           });

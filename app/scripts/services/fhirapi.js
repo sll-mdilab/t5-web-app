@@ -10,7 +10,10 @@
 angular.module('fhirWebApp')
   .constant('fhirAPI', {
     // Insert your API credentials here
-    apiUser: 'YOUR_API_USERNAME',
-    apiKey: 'YOUR_API_KEY',
-    url: 'YOUR_API_BASE_URL'
+    //apiUser: 'user',
+    //apiKey: 'Y7RcVXmxtvY2i7q9rgZ9',
+    //url: 'https://fhir.sll-mdilab.net/fhir/'
+    apiUser: '',
+    apiKey: '',
+    url: 'https://localhost:8343/fhir/'
   });

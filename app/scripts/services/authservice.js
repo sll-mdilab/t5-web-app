@@ -8,24 +8,26 @@
  * Factory in the fhirWebApp.
  */
 angular.module('fhirWebApp')
-  .factory('AuthService', ['$http', 'Session', function ($http, Session) {
+  .factory('AuthService', ['$http', '$q', 'Session', function ($http, $q, Session) {
     var authService = {};
 
-    authService.login = function (credentials) {
-      // Make an http request to login with credentials to simulate a server side authorization service.
+    authService.login = function (userId) {
       // This is where a new Session is created and the user details are set.
-      return $http({
-          url:'db/user/user.json', method:'GET'}
-      ).then(function(res){
-          for(var entryIdx in res.data){
-            var entry = res.data[entryIdx];
-            // Skip password check for ease
-            if(entry.user.id === credentials.username){
-              Session.create(entry.user.id, entry.user.role);
-              return entry.user;
-            }
-          }
-        });
+
+      return $q(function(resolve, reject) {
+       var userEntry = {
+          "id": "1",
+          "user": {
+            "id": userId,
+            "role": "nurse",
+            "password": "",
+            "name":"test",
+            "profileURL": "db/images/female-avatar-1.png"
+          }};
+          console.log('Creating session, userId = ' + userId);
+        Session.create(userId, userEntry.user.role);
+        resolve(userEntry.user);
+      });
     };
 
     authService.isAuthenticated = function () {
