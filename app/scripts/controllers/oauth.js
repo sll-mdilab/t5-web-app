@@ -8,20 +8,11 @@
  * Controller of the fhirWebApp
  */
 angular.module('fhirWebApp')
-  .controller('OauthCtrl', ['$scope', 'fhirConfig', function ($scope, fhirConfig) {
-  	console.log('Running oauth controller');
-
+  .controller('OauthCtrl', ['$scope', 'fhirConfig', 'fhirOauth', function ($scope, fhirConfig, fhirOauth) {
   	$scope.statustext = 'Connecting...';
 
-  	FHIR.oauth2.authorize({
-  		server: fhirConfig.url,
-  		client: {
-  			client_id: fhirConfig.oauthClientId,
-  			scope: 'openid profile',
-  			redirect_uri: fhirConfig.oauthRedirectUri
-  		}
-  	}, function(message) {
+    fhirOauth.authorize(function () {
   		console.log('Authorization failed: ' + message);
-  	});
+    });
 
   }]);

@@ -39,6 +39,7 @@ module.exports = function(config) {
       'bower_components/angular-base64/angular-base64.js',
       'bower_components/sprintf/src/sprintf.js',
       'bower_components/angular-uuid-service/angular-uuid-service.js',
+      'bower_components/fhir-client-js/dist/fhir-client.js',
       'bower_components/angular-fhir-resources/angularfhirresources-0.2.0.js',
       'bower_components/d3/d3.js',
       'bower_components/nvd3/build/nv.d3.js',

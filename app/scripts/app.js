@@ -85,6 +85,8 @@ angular
     // Specify T5-PoC credentials
     fhirConfigProvider.setAPICredentials(fhirAPI.apiUser, fhirAPI.apiKey);
     fhirConfigProvider.setBackendURL(fhirAPI.url);
+    fhirConfigProvider.setOauthClientId(fhirAPI.oauthClientId);
+    fhirConfigProvider.setOauthRedirectUri(fhirAPI.oauthRedirectUri);
   })
   .run(function($rootScope, $location, AUTH_EVENTS, AuthService, amMoment, fhirConfig){
     $rootScope.$on('$routeChangeStart', function(event, next){
