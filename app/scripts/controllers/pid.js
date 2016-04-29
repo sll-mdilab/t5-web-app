@@ -227,6 +227,7 @@ angular.module('fhirWebApp')
 
       $scope.fullDeviceList = [];
       $scope.fullPatientList = [];
+      $scope.fullReceiverList= [];
       $scope.connections = [];
       $scope.patient = undefined;
       // Get all available patients
